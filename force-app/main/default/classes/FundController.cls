@@ -43,6 +43,9 @@ global with sharing class FundController {
 
         @AuraEnabled
         public Decimal max5YearReturn { get; set; }
+
+        @AuraEnabled
+        public Decimal investmentProfile { get; set; }
     }
 
     @AuraEnabled(cacheable=true)
@@ -65,29 +68,36 @@ global with sharing class FundController {
         Decimal maxYtdReturn = filter.maxYtdReturn;
         Decimal max1YearReturn = filter.max1YearReturn;
         Decimal max5YearReturn = filter.max5YearReturn;
+        Decimal investmentProfile = filter.investmentProfile;
 
         String countSQL =
             'SELECT count() FROM Fund__c WITH_SECURITY_ENFORCED where name LIKE :key ' +
             'AND YTD_Return__c >= :minYtdReturn AND YTD_Return__c <= :maxYtdReturn ' +
             'AND One_Year_Return__c >= :min1YearReturn AND One_Year_Return__c <= :max1YearReturn ' +
-            'AND Five_Year_Return__c >= :min5YearReturn AND Five_Year_Return__c <= :max5YearReturn ';
+            'AND Five_Year_Return__c >= :min5YearReturn AND Five_Year_Return__c <= :max5YearReturn '+
+            'AND Investment_Profile__c <= :investmentProfile '; 
+
         if (!String.isBlank(filter.assetClass)) {
             countSQL = countSQL + 'AND Asset_Class__c = :assetClass ';
         }
         if (!String.isBlank(filter.sector)) {
             countSQL = countSQL + 'AND Sector__c = :sector ';
         }
+
         r.total = Database.countQuery(countSQL);
         r.pages = (Math.ceil(r.total / r.pageSize)).intValue();
         if (r.pages == 0) {
             r.pages = 1;
         }
+
         String sql =
             'SELECT id, name, abbreviation__c, asset_class__c, sector__r.Name, rating__c, YTD_Return__c, ' +
-            'One_Year_Return__c, Two_Year_Return__c, Five_Year_Return__c FROM Fund__c WITH_SECURITY_ENFORCED where name LIKE :key ' +
+            'One_Year_Return__c, Two_Year_Return__c, Five_Year_Return__c, Investment_Profile__c '+
+            'FROM Fund__c WITH_SECURITY_ENFORCED where name LIKE :key ' +
             'AND YTD_Return__c >= :minYtdReturn AND YTD_Return__c <= :maxYtdReturn ' +
             'AND One_Year_Return__c >= :min1YearReturn AND One_Year_Return__c <= :max1YearReturn ' +
-            'AND Five_Year_Return__c >= :min5YearReturn AND Five_Year_Return__c <= :max5YearReturn ';
+            'AND Five_Year_Return__c >= :min5YearReturn AND Five_Year_Return__c <= :max5YearReturn '+
+            'AND Investment_Profile__c <= :investmentProfile '; 
         if (!String.isBlank(filter.assetClass)) {
             sql = sql + 'AND Asset_Class__c = :assetClass ';
         }
@@ -95,6 +105,7 @@ global with sharing class FundController {
             sql = sql + 'AND Sector__c = :sector ';
         }
         sql = sql + 'LIMIT :pSize OFFSET :offset';
+
         r.funds = Database.query(sql);
         return r;
     }

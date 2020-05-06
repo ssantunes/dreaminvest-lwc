@@ -1,0 +1,63 @@
+.wrapper {
+    margin-top: 38px;
+    margin-left: 17px;
+    height: 48px;
+    position: relative;
+}
+
+.label {
+    top: 64px;
+    left: 44px;
+    right: 0;
+    text-align: center;
+    max-width: 350px;
+}
+
+.slider {
+    left: 28px;
+    right: 8px;
+    max-width: 350px;
+}
+
+.noUi-target,
+.noUi-handle {
+    box-shadow: none !important;
+}
+
+.noUi-target {
+    /*background: #ffffff; */
+    background: #85BD4A;
+    border: 1px solid rgb(216, 221, 230);
+    border-radius: 0.25rem;
+}
+
+.noUi-connect {
+    background: #85BD4A;
+    box-shadow: inset 0 0 3px rgba(51, 51, 51, 0.45);
+    -webkit-transition: background 450ms;
+    transition: background 450ms;
+}
+
+.noUi-tooltip {
+    width: 80px;
+    background: MediumSpringGree;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+  }
+  
+.Conservador {
+    background: MediumSpringGreen;
+    color: black;
+}
+.Arrojado {
+    color: black;
+    background: OrangeRed;
+}
+.Moderado {
+    color: black;
+    background: Gold;
+}
+

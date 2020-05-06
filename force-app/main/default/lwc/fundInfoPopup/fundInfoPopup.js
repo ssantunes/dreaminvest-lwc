@@ -50,4 +50,9 @@ export default class FundInfoPopup extends LightningElement {
     getColor(value) {
         return value < 0 ? 'red' : 'green';
     }
+
+    get investmentProfileName() {
+        var profileName = ['','Conservador','Moderado','Arrojado'];
+        return profileName[this.fund.Investment_Profile__c];
+    }
 }

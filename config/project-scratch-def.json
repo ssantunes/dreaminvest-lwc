@@ -6,7 +6,9 @@
         "orgPreferenceSettings": {
             "s1DesktopEnabled": true,
             "selfSetPasswordInApi": true,
-            "s1EncryptedStoragePref2": false
+            "s1EncryptedStoragePref2": false,
+            "features": "DebugApex"
         }
     }
 }
+

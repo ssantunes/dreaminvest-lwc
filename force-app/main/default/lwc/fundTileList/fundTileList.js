@@ -17,7 +17,8 @@ export default class FundTileList extends LightningElement {
         min1YearReturn: -30,
         max1YearReturn: 30,
         min5YearReturn: -30,
-        max5YearReturn: 30
+        max5YearReturn: 30,
+        investmentProfile: 1
     };
 
     @wire(CurrentPageReference) pageRef;
@@ -38,6 +39,11 @@ export default class FundTileList extends LightningElement {
         registerListener(
             'dreaminvest__returnrangechange',
             this.handleReturnRangeChange,
+            this
+        );
+        registerListener(
+            'dreaminvest__investmentprofilechange',
+            this.handleReturnInvestmentProfileChange,
             this
         );
     }
@@ -85,6 +91,15 @@ export default class FundTileList extends LightningElement {
         this._filter = Object.assign({}, this._filter);
         this.page = 1;
     }
+
+    handleReturnInvestmentProfileChange(event) {
+        const filterName = event.filterName;
+        const Value = event.Value;
+        this._filter.investmentProfile = Value;
+        this._filter = Object.assign({}, this._filter);
+        this.page = 1;
+    }
+
 
     handlePeekEnter(event) {
         const popup = this.template.querySelector('c-fund-info-popup');
